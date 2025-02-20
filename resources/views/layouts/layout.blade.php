@@ -6,11 +6,12 @@
     <title>Ready Bootstrap Dashboard</title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
         name='viewport' />
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{asset('assets/css/bootstrap.min.css')}}">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
-    <link rel="stylesheet" href="assets/css/ready.css">
-    <link rel="stylesheet" href="assets/css/demo.css">
+    <link rel="stylesheet" href="{{asset('assets/css/ready.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/demo.css')}}">
+
 </head>
 
 <body>
@@ -193,19 +194,25 @@
                             <span class="badge badge-count">5</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="components.html">
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
                             <i class="la la-table"></i>
-                            <p>Trips</p>
-                            <span class="badge badge-count">14</span>
+                            <p>رحلات</p>
                         </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{ route('trip.index') }}">جميع الرحلات</a></li>
+                            <li><a class="dropdown-item" href="{{ route('trip.create') }}">إضافه رحله جديده</a></li>
+                        </ul>
                     </li>
-                    <li class="nav-item">
-                        <a href="forms.html">
-                            <i class="la la-keyboard-o"></i>
-                            <p>plans</p>
-                            <span class="badge badge-count">50</span>
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                            <i class="la la-table"></i>
+                            <p>خطط تناسب ميزانيتك</p>
                         </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{ route('plan.index') }}">جميع الخطط</a></li>
+                            <li><a class="dropdown-item" href="{{ route('plan.create') }}">إضافه خطه جديده</a></li>
+                        </ul>
                     </li>
                     <li class="nav-item">
                         <a href="tables.html">
@@ -273,19 +280,20 @@
         </div>
     </div>
 </body>
-<script src="assets/js/core/jquery.3.2.1.min.js"></script>
-<script src="assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
-<script src="assets/js/core/popper.min.js"></script>
-<script src="assets/js/core/bootstrap.min.js"></script>
-<script src="assets/js/plugin/chartist/chartist.min.js"></script>
-<script src="assets/js/plugin/chartist/plugin/chartist-plugin-tooltip.min.js"></script>
-<script src="assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
-<script src="assets/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js"></script>
-<script src="assets/js/plugin/jquery-mapael/jquery.mapael.min.js"></script>
-<script src="assets/js/plugin/jquery-mapael/maps/world_countries.min.js"></script>
-<script src="assets/js/plugin/chart-circle/circles.min.js"></script>
-<script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
-<script src="assets/js/ready.min.js"></script>
-<script src="assets/js/demo.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{{asset('assets/js/core/jquery.3.2.1.min.js')}}"></script>
+<script src="{{asset('assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js')}}"></script>
+<script src="{{asset('assets/js/core/popper.min.js')}}"></script>
+<script src="{{asset('assets/js/core/bootstrap.min.js')}}"></script>
+<script src="{{asset('assets/js/plugin/chartist/chartist.min.js')}}"></script>
+<script src="{{asset('assets/js/plugin/chartist/plugin/chartist-plugin-tooltip.min.js')}}"></script>
+<script src="{{asset('assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js')}}"></script>
+<script src="{{asset('assets/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js')}}"></script>
+<script src="{{asset('assets/js/plugin/jquery-mapael/jquery.mapael.min.js')}}"></script>
+<script src="{{asset('assets/js/plugin/jquery-mapael/maps/world_countries.min.js')}}"></script>
+<script src="{{asset('assets/js/plugin/chart-circle/circles.min.js')}}"></script>
+<script src="{{asset('assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js')}}"></script>
+<script src="{{asset('assets/js/ready.min.js')}}"></script>
+<script src="{{asset('assets/js/demo.js')}}"></script>
 
 </html>
