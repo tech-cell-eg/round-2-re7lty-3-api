@@ -26,23 +26,8 @@ class PlanRequest extends FormRequest
             'plan_type' => 'required|in:economic,family,business',
             'target_type' => 'required|in:individual,group',
             'description' => 'required|string|max:500',
-            'options' => 'nullable|array',
-        ];
+            'options' => 'nullable|string',
+                ];
     }
-    public function messages()
-    {
-        return [
-            'price.required' => 'السعر مطلوب.',
-            'price.numeric' => 'السعر يجب أن يكون رقمًا.',
-            'price.min' => 'السعر يجب أن يكون غير سالب.',
-            'plan_type.required' => 'نوع الخطة مطلوب.',
-            'plan_type.in' => 'نوع الخطة غير صالح.',
-            'target_type.required' => 'نوع المستفيد مطلوب.',
-            'target_type.in' => 'نوع المستفيد غير صالح.',
-            'description.required' => 'الوصف مطلوب.',
-            'description.string' => 'الوصف يجب أن يكون نصًا.',
-            'description.max' => 'الوصف لا يمكن أن يتجاوز 500 حرف.',
-            'options.array' => 'الخيارات يجب أن تكون مصفوفة.',
-        ];
-    }
+
 }

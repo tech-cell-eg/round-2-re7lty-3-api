@@ -11,42 +11,45 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\ProfileUpdateRequest;
-
+use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
 
-    public function show(Request $request): View
+    public function show(): View
     {
         return view('profile.show', [
-            'user' => $request->user(),
+            'user' => Auth::user(),
         ]);
     }
 
-    public function edit(Request $request): View
+    public function edit(): View
     {
         return view('profile.edit', [
-            'user' => $request->user(),
+            'user' => Auth::user(),
         ]);
     }
     public function update(ProfileUpdateRequest $request)
     {
-        $user = $request->user();
-        $user->fill($request->validated());
+        $user = Auth::user();
+        $validatedData = $request->validated();
         if ($request->hasFile('image')) {
-        if ($user->image) {
-        Storage::disk('public')->delete($user->image);
+            if ($user->image && Storage::disk('public')->exists($user->image)) {
+                Storage::disk('public')->delete($user->image);
+            }
+
+            $imageName = time() . '_' . $user->id . '.' . $request->file('image')->getClientOriginalExtension();
+            $validatedData['image'] = $request->file('image')->storeAs('profile', $imageName, 'public');
         }
-        $imageName = time() . '_' . $user->id . '.' . $request->file('image')->getClientOriginalExtension();
-        $imagePath = $request->file('image')->storeAs('profile', $imageName, 'public');
-        $user->image = $imagePath;
+        if (isset($validatedData['email']) && $validatedData['email'] !== $user->email) {
+            $validatedData['email_verified_at'] = null;
         }
-        if ($user->isDirty('email')) {
-        $user->email_verified_at = null;
-        }
-        $user->save();
+        $user->update($validatedData);
         return redirect()->route('profile.show')->with('success', 'تم تحديث الملف الشخصي بنجاح!');
     }
+
+
+
     public function destroy(Request $request): RedirectResponse
     {
         $request->validateWithBag('userDeletion', [
@@ -63,5 +66,11 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('dashboard');
+    }
+    public function accountSettings()
+    {
+        return view('profile.settings', [
+            'user' => Auth::user(),
+        ]);
     }
 }

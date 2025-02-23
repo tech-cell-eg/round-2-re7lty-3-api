@@ -1,9 +1,15 @@
 <?php
 
 use App\Http\Controllers\Blade\PlanController;
+use App\Http\Controllers\Blade\ServiceController;
 use App\Http\Controllers\Blade\TripController;
+use App\Http\Controllers\EmailController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\AuthAdmin;
+use App\Http\Controllers\Auth\PasswordController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\ChangePasswordController;
+use App\Http\Controllers\Blade\ReviewController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -15,12 +21,24 @@ Route::get('/dashboard', function () {
     return redirect()->route('home');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+//setting
+Route::middleware('auth')->group(function () {
+    Route::get('/settings', function () {
+        return view('profile.settings');
+    })->name('settings');
+
+    Route::put('/email', [EmailController::class, 'update'])->name('email.update');
+    Route::put('/change-password', [ChangePasswordController::class, 'update'])->name('password.change');
+    Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+});
+
+
 Route::middleware('auth')->group(function () {
     Route::get('/my-profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+   });
 
 require __DIR__.'/auth.php';
 
@@ -53,4 +71,26 @@ Route::middleware(['auth',AuthAdmin::class])->group(function () {
 
     Route::delete('/plan/{id}', [PlanController::class, 'destroy'])->name('plan.destroy');
 
+    //services
+    Route::get('/service', [ServiceController::class, 'index'])->name('service.index');
+
+    Route::get('/service/create', [ServiceController::class, 'create'])->name('service.create');
+    Route::post('/service', [ServiceController::class, 'store'])->name('service.store');
+
+    Route::get('/service/{id}/edit', [ServiceController::class, 'edit'])->name('service.edit');
+    Route::put('/service/{id}', [ServiceController::class, 'update'])->name('service.update');
+
+    Route::delete('/service/{id}', [ServiceController::class, 'destroy'])->name('service.destroy');
+
+    //reviews
+    Route::get('/review', [ReviewController::class, 'index'])->name('review.index');
+
+    Route::get('/review/create', [ReviewController::class, 'create'])->name('review.create');
+    Route::post('/review', [ReviewController::class, 'store'])->name('review.store');
+
+    Route::get('/review/{id}/edit', [ReviewController::class, 'edit'])->name('review.edit');
+    Route::put('/review/{id}', [ReviewController::class, 'update'])->name('review.update');
+
+    Route::delete('/review/{id}', [ReviewController::class, 'destroy'])->name('review.destroy');
 });
+

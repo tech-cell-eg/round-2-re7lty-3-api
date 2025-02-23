@@ -8,7 +8,7 @@
                     <h3>تعديل الخطة</h3>
                 </div>
                 <div class="card-body">
-                    @include('message') 
+                    @include('message')
                     <form action="{{ route('plan.update', $plan->id) }}" method="POST">
                         @csrf
                         @method('PUT')
@@ -50,21 +50,14 @@
                             @enderror
                         </div>
                         <div class="mb-3">
-                            <label class="form-label font-weight-bold">الخيارات:</label>
-                            <div class="d-flex flex-wrap">
-                                @foreach ($options as $key => $value)
-                                    <div class="form-check form-check-inline mb-2">
-                                        <input class="form-check-input" type="checkbox" name="options[]" id="{{ $key }}" value="{{ $key }}"
-                                            @if (old('options') && in_array($key, old('options'))) checked
-                                            @elseif(isset($plan->options) && isset($plan->options[$key])) checked
-                                            @endif>
-                                        <label class="form-check-label" for="{{ $key }}">{{ $value }}</label>
-                                    </div>
-                                @endforeach
-                            </div>
+                            <label for="options" class="form-label font-weight-bold">الخيارات:</label>
+                            <textarea name="options" id="options" class="form-control @error('options') is-invalid @enderror" rows="4" placeholder="أدخل كل خيار في سطر جديد">
+                                {{ old('options', $planOptions) }}
+                            </textarea>
+                            @error('options')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
-
-                        <!-- زر الإرسال -->
                         <div class="text-center">
                             <button type="submit" class="btn btn-primary btn-lg w-100">تحديث الخطة</button>
                         </div>

@@ -30,9 +30,7 @@ class TripController extends Controller
     {
         $data = $request->validated();
         if ($request->hasFile('image')) {
-            $imageName = Str::uuid() . '.' . $request->file('image')->getClientOriginalExtension();
-            $imagePath = $request->file('image')->storeAs('trips', $imageName, 'public');
-            $data['image'] = $imagePath;
+            $data['image'] = $request->file('image')->store('trips', 'public');
         }
         $trip = Trip::create($data);
         if ($trip) {
@@ -41,7 +39,7 @@ class TripController extends Controller
             return back()->withInput()->withErrors(['error' => 'فشل إنشاء الرحلة.']);
         }
     }
-    
+
     public function edit($id){
         $trip=Trip::findOrFail($id);
         return view('trips.edit',compact('trip'));
@@ -55,9 +53,10 @@ class TripController extends Controller
             if ($trip->image) {
                 Storage::disk('public')->delete($trip->image);
             }
-            $imageName = time() . '_' . $trip->id . '.' . $request->file('image')->getClientOriginalExtension();
-            $imagePath = $request->file('image')->storeAs('trips', $imageName, 'public');
-            $data['image'] = $imagePath;
+            $data['image'] = $request->file('image')->store('trips', 'public');
+        }
+        elseif (isset($data['image']) && $data['image'] === '') {
+            $data['image'] = null;
         }
         $trip->update($data);
         return redirect()->route('trip.index')->with('success', 'تم تحديث الرحلة بنجاح!');

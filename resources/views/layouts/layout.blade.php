@@ -133,8 +133,9 @@
                                 <a class="dropdown-item" href="#"></i> My Balance</a>
                                 <a class="dropdown-item" href="#"><i class="ti-email"></i> Inbox</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#"><i class="ti-settings"></i> Account
-                                    Setting</a>
+                                <a class="dropdown-item" href="{{ route('settings') }}">
+                                    <i class="ti-settings"></i> Account Settings
+                                </a>
                                 <div class="dropdown-divider"></div>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
@@ -178,8 +179,8 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#settings">
-                                        <span class="link-collapse">Settings</span>
+                                    <a href="{{ route('settings') }}">
+                                        <span class="link-collapse">Account Settings</span>
                                     </a>
                                 </li>
                             </ul>
@@ -200,7 +201,7 @@
                             <p>رحلات</p>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ route('trip.index') }}">جميع الرحلات</a></li>
+                            <li><a class="dropdown-item" href="{{ route('trip.index') }}">جميع الرحلات </a></li>
                             <li><a class="dropdown-item" href="{{ route('trip.create') }}">إضافه رحله جديده</a></li>
                         </ul>
                     </li>
@@ -214,19 +215,25 @@
                             <li><a class="dropdown-item" href="{{ route('plan.create') }}">إضافه خطه جديده</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item">
-                        <a href="tables.html">
-                            <i class="la la-th"></i>
-                            <p>Services</p>
-                            <span class="badge badge-count">6</span>
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                            <i class="la la-table"></i>
+                            <p>الخدمات</p>
                         </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{ route('service.index') }}">جميع الخدمات</a></li>
+                            <li><a class="dropdown-item" href="{{ route('service.create') }}">إضافه خدمة جديده</a></li>
+                        </ul>
                     </li>
-                    <li class="nav-item">
-                        <a href="notifications.html">
-                            <i class="la la-bell"></i>
-                            <p>Reviews</p>
-                            <span class="badge badge-success">3</span>
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                            <i class="la la-table"></i>
+                            <p>الشهادات</p>
                         </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{ route('review.index') }}">جميع الشهادات  </a></li>
+                            <li><a class="dropdown-item" href="{{ route('review.create') }}">إضافه شهادة جديد</a></li>
+                        </ul>
                     </li>
                     <li class="nav-item">
                         <a href="typography.html">

@@ -1,13 +1,12 @@
 @extends('layouts.layout')
 @section('content')
 <div class="container mt-5">
-    @include('message') 
+    @include('message')
 
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1 class="text-primary">الرحلات</h1>
-        <a href="{{ route('trip.create') }}" class="btn btn-success">إضافة رحلة جديدة</a>
+        <h1 class="text-primary">الخدمات</h1>
+        <a href="{{ route('service.create') }}" class="btn btn-success">إضافة خدمة جديدة</a>
     </div>
-
     <style>
         body {
             background-color: #f8f9fa;
@@ -86,43 +85,40 @@
             border-radius: 8px;
         }
     </style>
-
-    @if ($trips->isEmpty())
+    @if ($services->isEmpty())
         <div class="alert alert-empty text-center" role="alert">
-            لا توجد رحلات متاحة حاليًا.
+            لا توجد خدمات متاحة حاليًا.
         </div>
     @else
         <table class="table custom-table">
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">المكان</th>
-                    <th scope="col">السعر</th>
-                    <th scope="col">مدة الرحلة (أيام)</th>
+                    <th scope="col">أسم الخدمة</th>
+                    <th scope="col">الوصف</th>
                     <th scope="col">الصورة</th>
                     <th scope="col" class="text-center">**</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($trips as $trip)
+                @foreach ($services as $service)
                     <tr>
-                        <td>{{ $trip->id }}</td>
-                        <td>{{ $trip->location }}</td>
-                        <td>{{ $trip->price }} دولار</td>
-                        <td>{{ $trip->duration_days }} يومًا</td>
+                        <td>{{ $service->id }}</td>
+                        <td>{{ $service->name }}</td>
+                        <td>{{ $service->description }}</td>
                         <td>
-                            @if ($trip->image)
-                                <img src="{{ asset('storage/' . $trip->image) }}" alt="Trip Image" class="rounded-circle img-thumbnail">
+                            @if ($service->image)
+                                <img src="{{ asset('storage/' . $service->image) }}" alt="service Image" class="rounded-circle img-thumbnail">
                             @else
                                 <span class="text-muted">لا يوجد صورة</span>
                             @endif
                         </td>
                         <td class="text-center action-btns">
                             <div class="btn-group" role="group">
-                                <a href="{{ route('trip.edit', $trip->id) }}" class="btn btn-sm btn-warning">
+                                <a href="{{ route('service.edit', $service->id) }}" class="btn btn-sm btn-warning">
                                     <i class="fa fa-edit"></i> تعديل
                                 </a>
-                                <form action="{{ route('trip.destroy', $trip->id) }}" method="POST" class="d-inline">
+                                <form action="{{ route('service.destroy', $service->id) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('هل أنت متأكد من الحذف؟')">
@@ -137,7 +133,7 @@
         </table>
 
         <div class="d-flex justify-content-center mt-3">
-            {{ $trips->links('pagination::bootstrap-4') }}
+            {{ $services->links('pagination::bootstrap-4') }}
         </div>
     @endif
 </div>

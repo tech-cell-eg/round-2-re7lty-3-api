@@ -1,7 +1,7 @@
 @extends('layouts.layout')
 @section('content')
 <div class="container mt-5">
-    @include('message') <!-- لإظهار رسائل النجاح أو الخطأ -->
+    @include('message')
 
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1 class="text-primary">الخطط</h1>
@@ -10,11 +10,11 @@
 
     <style>
         body {
-            background-color: #f8f9fa; /* خلفية بيضاء ناعمة */
+            background-color: #f8f9fa;
         }
 
         .custom-table {
-            background-color: #ffffff; /* خلفية البيج للجدول */
+            background-color: #ffffff;
             border: 1px solid #ddd;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
@@ -32,17 +32,17 @@
         }
 
         .custom-table thead {
-            background-color: #eef6ff; /* لون رأس الجدول */
+            background-color: #eef6ff;
             color: #333;
             font-weight: bold;
         }
 
         .custom-table tbody tr:nth-child(even) {
-            background-color: #f3f7fb; /* تبديل الألوان بين الصفوف */
+            background-color: #f3f7fb;
         }
 
         .custom-table tbody tr:hover {
-            background-color: #eef6ff; /* لون عند Hover */
+            background-color: #eef6ff;
         }
 
         .custom-table .action-btns a,
@@ -51,7 +51,7 @@
         }
 
         .custom-table .action-btns .btn-warning {
-            background-color: #199b37 !important; /* لون زر التعديل */
+            background-color: #199b37 !important;
             border-color: #28a745 !important;
         }
 
@@ -61,7 +61,7 @@
         }
 
         .custom-table .action-btns .btn-danger {
-            background-color: #dc3545 !important; /* لون زر الحذف */
+            background-color: #dc3545 !important;
             border-color: #dc3545 !important;
         }
 
@@ -71,7 +71,7 @@
         }
 
         .alert-empty {
-            background-color: #fff3cd; /* لون تحذير أنيق */
+            background-color: #fff3cd;
             color: #856404;
             border-color: #ffeeba;
             padding: 15px;
@@ -106,25 +106,17 @@
                         <td>{{ Str::limit($plan->description, 50, '...') }}</td>
                         <td>
                             @if (!empty($plan->options))
-                                <ul class="list-unstyled">
-                                    @foreach ((is_array($plan->options) ? $plan->options : json_decode($plan->options, true) ?? []) as $index => $value)
-                                        <li><strong>{{ $loop->iteration }}:</strong> {{ $value }}</li>
-                                    @endforeach
-                                </ul>
+                                {!! nl2br(e(implode(PHP_EOL, json_decode($plan->options, true)))) !!} <!-- عرض كل خيار في سطر جديد -->
                             @else
                                 <span class="text-muted">لا توجد خيارات.</span>
                             @endif
                         </td>
 
-
-
                         <td class="text-center action-btns">
                             <div class="btn-group" role="group">
-                                <!-- زر تعديل -->
                                 <a href="{{ route('plan.edit', $plan->id) }}" class="btn btn-sm btn-warning">
                                     <i class="fa fa-edit"></i> تعديل
                                 </a>
-                                <!-- زر حذف -->
                                 <form action="{{ route('plan.destroy', $plan->id) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('DELETE')
