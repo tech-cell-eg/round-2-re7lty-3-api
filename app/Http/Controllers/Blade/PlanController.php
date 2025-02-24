@@ -24,7 +24,6 @@ class PlanController extends Controller
     {
         $data = $request->validated();
 
-        // تحويل الخيارات إلى مصفوفة ثم إلى JSON
         if (isset($data['options'])) {
             $data['options'] = json_encode($this->prepareOptions($data['options']));
         }
@@ -44,7 +43,6 @@ class PlanController extends Controller
     {
         $plan = Plan::findOrFail($id);
 
-        // تحويل JSON إلى نص عادي لعرضه في النموذج
         $planOptions = '';
         if ($plan->options) {
             $planOptions = implode(PHP_EOL, json_decode($plan->options, true));
@@ -58,7 +56,6 @@ class PlanController extends Controller
         $plan = Plan::findOrFail($id);
         $data = $request->validated();
 
-        // تحويل الخيارات إلى مصفوفة ثم إلى JSON
         if (isset($data['options'])) {
             $data['options'] = json_encode($this->prepareOptions($data['options']));
         }
@@ -74,9 +71,7 @@ class PlanController extends Controller
     protected function prepareOptions($options)
     {
         if (!is_array($options)) {
-            // تقسيم النصوص إلى مصفوفة بناءً على الأسطر
             $options = explode(PHP_EOL, trim($options));
-            // إزالة العناصر الفارغة
             $options = array_filter($options);
         }
         return $options;

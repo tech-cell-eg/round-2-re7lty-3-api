@@ -18,9 +18,10 @@
     <div class="wrapper">
         <div class="main-header">
             <div class="logo-header">
-                <a href="index.html" class="logo">
+                <a href="{{ route('site.settings.index') }}" class="la la-cog la-2x">
                     Re7lty
                 </a>
+
                 <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse"
                     data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -53,6 +54,7 @@
                                 <a class="dropdown-item" href="#">Something else here</a>
                             </div>
                         </li>
+
                         <li class="nav-item dropdown hidden-caret">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -235,12 +237,16 @@
                             <li><a class="dropdown-item" href="{{ route('review.create') }}">إضافه شهادة جديد</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item">
-                        <a href="typography.html">
-                            <i class="la la-font"></i>
-                            <p>Contact us</p>
-                            <span class="badge badge-danger">25</span>
+
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                            <i class="la la-table"></i>
+                            <p>التواصل</p>
                         </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{ route('contacts.index') }}">جميع الرسائل</a></li>
+                            <li><a class="dropdown-item" href="{{ route('contacts.unreplied') }}">الرسائل غير المردود عليها</a></li>
+                        </ul>
                     </li>
                     <li class="nav-item">
                         <a href="icons.html">

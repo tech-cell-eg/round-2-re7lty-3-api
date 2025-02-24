@@ -1,17 +1,19 @@
 <?php
 
-use App\Http\Controllers\Blade\PlanController;
-use App\Http\Controllers\Blade\ServiceController;
-use App\Http\Controllers\Blade\TripController;
-use App\Http\Controllers\EmailController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\AuthAdmin;
-use App\Http\Controllers\Auth\PasswordController;
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\Auth\ChangePasswordController;
-use App\Http\Controllers\Blade\ReviewController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EmailController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\Blade\PlanController;
+use App\Http\Controllers\Blade\TripController;
+use App\Http\Controllers\Blade\ReviewController;
+use App\Http\Controllers\Auth\PasswordController;
+use App\Http\Controllers\Blade\ServiceController;
+use App\Http\Controllers\Blade\ContactUsController;
+use App\Http\Controllers\Auth\ChangePasswordController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -20,6 +22,11 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return redirect()->route('home');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+//setting for website
+Route::get('/site/settings', [SettingsController::class, 'index'])->name('site.settings.index');
+Route::post('/site/settings/update', [SettingsController::class, 'update'])->name('site.settings.update');
+
 
 //setting
 Route::middleware('auth')->group(function () {
@@ -92,5 +99,13 @@ Route::middleware(['auth',AuthAdmin::class])->group(function () {
     Route::put('/review/{id}', [ReviewController::class, 'update'])->name('review.update');
 
     Route::delete('/review/{id}', [ReviewController::class, 'destroy'])->name('review.destroy');
-});
+
+    //contacts
+    Route::get('/contacts', [ContactUsController::class, 'index'])->name('contacts.index');
+    Route::get('/contacts/unreplied', [ContactUsController::class, 'unreplied'])->name('contacts.unreplied');
+    Route::get('/contacts/{id}', [ContactUsController::class, 'show'])->name('contacts.show');
+    Route::post('/contacts/{id}/reply', [ContactUsController::class, 'reply'])->name('contacts.reply');
+    Route::delete('/contacts/{id}', [ContactUsController::class, 'destroy'])->name('contacts.destroy');
+    });
+
 
