@@ -20,11 +20,7 @@ class PlanController extends Controller
     }
     //show plane by id
     public function show($id){
-        $plan=Plan::find($id);
-        if (!$plan) {
-            return $this->errorResponse('Plan not found.', 404);
-        }
-
+        $plan=Plan::findOrFail($id);
         return $this->successResponse($plan, 'Plan retrieved successfully.');
     }
 
