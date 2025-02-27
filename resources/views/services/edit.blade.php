@@ -14,7 +14,7 @@
                         @csrf
                         @method('PUT')
                         <div class="mb-3">
-                            <label for="name" class="form-label">المكان:</label>
+                            <label for="name" class="form-label">الاسم</label>
                             <input type="text" name="name" id="name" class="form-control form-control-lg @error('name') is-invalid @enderror" value="{{ old('name', $service->name) }}" required>
                             @error('name')
                                 <div class="invalid-feedback">{{ $message }}</div>
